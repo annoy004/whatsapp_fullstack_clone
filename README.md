@@ -1,27 +1,16 @@
-
-Here's a clear and well-organized explanation of the steps:
+To run the application locally and test the real-time chatting functionality, follow these steps:
 
 Install Dependencies:
 
-Navigate to each of the three project directories and run the following command to install the necessary dependencies:
-bash
-Copy code
-npm install
-Add Changes to Git:
+In each of the three project directories, ensure that all necessary dependencies are installed by running the npm install command.
+Stage Changes for Commit:
 
-After making changes to the files, ensure that all modifications are added to version control by running:
-bash
-Copy code
-git add .
+After making any updates or modifications to the project files, add these changes to version control using the git add . command.
 Start the Application:
 
-To launch the application, execute the following command in each of the three project directories:
-bash
-Copy code
-npm run start
-Testing the Application:
+Launch the application in each project directory by running the npm run start command.
+Test Real-Time Chatting:
 
-Once the application is running, open multiple tabs in your browser and access the app at localhost.
-Sign in with different accounts across the tabs to simulate real-time chatting.
-This setup allows you to interact with the app simultaneously across multiple sessions, testing real-time chat functionality.
-This process ensures that the application is correctly set up, running, and ready for real-time communication testing.
+Open your browser and navigate to localhost to access the application.
+Sign in with multiple accounts using different tabs, all pointing to the same localhost address.
+This setup will allow you to view the application and test the real-time chatting functionality across multiple sessions simultaneously.
