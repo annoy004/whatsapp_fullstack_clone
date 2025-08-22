@@ -8,7 +8,7 @@ const PASSWORD = process.env.DB_PASSWORD;
 
 
 const Connection = async () => {
-    const URL=`mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.dfjmu3d.mongodb.net/whatsapp?retryWrites=true&w=majority`
+    const URL=`mongodb+srv://${USERNAME}:${PASSWORD}@cluster0.dfjmu3d.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
     
       try {
        const conn = await mongoose.connect(URL);

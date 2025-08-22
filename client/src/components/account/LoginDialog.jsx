@@ -7,48 +7,62 @@ import {addUser} from '../../services/api'
 import {GoogleLogin} from '@react-oauth/google'
 import { jwtDecode } from "jwt-decode";
 
-const Component =styled(Box)`
-display:flex;
- `
+const Component = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+`;
 
- const StyledList =styled(List)`
- & > li {
-     padding : 0;
-     margin-top :15px;
-     font-size:18px;
-     line-height:28px;
-     color:#4a4a4a;
-     overflow:hidden;
- 
- } `
+const StyledList = styled(List)`
+  & > li {
+    padding: 0;
+    margin-top: 15px;
+    font-size: 18px;
+    line-height: 28px;
+    color: #4a4a4a;
+    overflow: hidden;
+  }
+`;
 
- const Container =styled(Box)`
- padding : 56px  56px 56px;
- `
+const Container = styled(Box)`
+  padding: 48px;
+  max-width: 400px;
+`;
 
- const QRCode = styled('img')({ height:264,
-    width:264,
-    margin:'50px 50px 0 50px',
- })
+const QRCode = styled("img")({
+  height: 264,
+  width: 264,
+  margin: "0 auto",
+  display: "block",
+});
 
- const Title =styled(Typography)`
- font-size:26px`
+const Title = styled(Typography)`
+  font-size: 28px;
+  font-weight: bold;
+  color: #202124;
+  margin-bottom: 16px;
+`;
 
+const SubTitle = styled(Typography)`
+  font-size: 16px;
+  color: #5f6368;
+  margin-bottom: 32px;
+`;
 
+const dialogStyle = {
+  height: "96%",
+  marginTop: "12%",
+  width: "60%",
+  maxWidth: "100%",
+  maxHeight: "100%",
+  boxShadow: "none",
+  overflow: "hidden",
+  borderRadius: "16px",
+};
 
-
-
-
-const dialogStyle ={
-    height : '96%',
-    marginTop: '12%',
-    width:'60%',
-    maxWidth:'100%',
-    maxHeight: '100%',
-    boxshadow:'none',
-    overflow:'none'
-  
-}
 
 const LoginDialog = () => {
     const {setAccount } =useContext(AccountContext);

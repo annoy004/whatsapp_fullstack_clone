@@ -7,29 +7,32 @@ import { formatDate ,downloadMedia} from '../../../utils/common-utils';
 import {iconPDF} from '../../../constant/data.js'
 
 const Own = styled(Box)`
-background:#dcf8c6;
-max-width:60%;
-margin-left:auto;
-padding:5px;
-width:fit-content;
-display:flex;
-border-radius:10px;
-word-break:break-word;
-`
+  background: linear-gradient(135deg, #d6b5ff, #b0d7ff);
+  max-width: 60%;
+  margin-left: auto;
+  padding: 10px;
+  width: fit-content;
+  display: flex;
+  border-radius: 20px;
+  word-break: break-word;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+`;
 const Wrapper = styled(Box)`
-background:#FFFFFF;
-max-width:60%;
-padding:5px;
-width:fit-content;
-display:flex;
-border-radius:10px;
-word-break:break-word;
-`
+  background: #ffffff;
+  max-width: 60%;
+  padding: 10px;
+  width: fit-content;
+  display: flex;
+  border-radius: 20px;
+  word-break: break-word;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+`;
 
 const Text = styled(Typography)`
-font-size:14px;
-padding: 0 25px 0 25px; 
+  font-size: 14px;
+  padding: 0 20px;
 `;
+
 
 const Time = styled(Typography)`
 font-size:10px;
@@ -80,7 +83,7 @@ const ImageMessage = ({message}) => {
             }<Time style={{position: 'absolute' ,bottom:0,right:0}}>
                 <GetAppIcon
                 onClick={(e) => {downloadMedia(e,message.text)}  }
-                style={{marginRight: 10,border:'1px solid gray',borderRadius: '50%' }} fontSize='small'/>
+                style={{marginRight: 10,border:'1px solid gray',borderRadius: '20%' }} fontSize='small'/>
                 {formatDate(message.createdAt)}
                 </Time>
          </Box>

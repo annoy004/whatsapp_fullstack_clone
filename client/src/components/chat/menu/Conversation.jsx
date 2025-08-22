@@ -48,7 +48,7 @@ const Conversation =({user}) => {
     },[newMessageFlag])
 
     const getUsers =  async () => {
-                setPerson(user);
+            setPerson(user);
         await setConversation ({senderId:account.sub, receiverId:user.sub});
 
     }

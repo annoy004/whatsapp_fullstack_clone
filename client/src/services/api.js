@@ -7,7 +7,6 @@ export const addUser =async (data) => {
     }catch(error){
         console.log("Error while Using addUser api", error.message);
     }
-
 }
 
 export const getUsers = async () => {
