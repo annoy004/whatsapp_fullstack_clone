@@ -1,8 +1,10 @@
 import { Server } from "socket.io";
 
-const io = new Server(9000, {
+const PORT = process.env.PORT || 9000;
+
+const io = new Server(PORT, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "*", // Allow all origins for now, we'll restrict this later
   },
 });
 
@@ -25,6 +27,8 @@ const removeUser = (socketId) => {
 const getUser = (userId) => {
   return users.filter((user) => user.sub === userId); // return all sessions
 };
+
+console.log(`🚀 Socket.IO server running on port ${PORT}`);
 
 io.on("connection", (socket) => {
   console.log("✅ User connected:", socket.id);
