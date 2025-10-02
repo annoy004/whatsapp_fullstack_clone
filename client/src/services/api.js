@@ -1,5 +1,5 @@
 import axios from 'axios';
-const url = 'http://localhost:8000';
+const url = process.env.REACT_APP_API_URL || 'https://whatsapp-fullstack-clone-1.onrender.com';
 
 export const addUser =async (data) => {
     try{
