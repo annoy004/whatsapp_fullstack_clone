@@ -13,6 +13,7 @@ const AccountProvider =({children}) => {
     const [person ,setPerson] =useState({});
     const [activeUsers,setActiveUsers] = useState([]);
     const [newMessageFlag, setNewMessageFlag] = useState(false);
+    const [activeGroup, setActiveGroup] = useState(null);
 
     const socket = useRef();
 
@@ -24,8 +25,8 @@ const AccountProvider =({children}) => {
     return (
         <AccountContext.Provider value ={{
             account , setAccount,person,setPerson,socket,
-            activeUsers,setActiveUsers,newMessageFlag,setNewMessageFlag
-
+            activeUsers,setActiveUsers,newMessageFlag,setNewMessageFlag,
+            activeGroup, setActiveGroup
         }}>
             {children}
         </AccountContext.Provider>

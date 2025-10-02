@@ -62,3 +62,21 @@ export const uploadFile = async(data ) => {
     console.log('Error while calling uploadFile api',error.message);
   }
 }
+
+export const getGroups = async (userId) => {
+  try {
+    let response = await axios.get(`${url}/groups?userId=${userId}`);
+    return response.data;
+  } catch (error) {
+    console.log('Error while calling getGroups api', error.message);
+  }
+}
+
+export const getGroupMessages = async (groupId, userId) => {
+  try {
+    let response = await axios.get(`${url}/group/messages/${groupId}?userId=${userId}`);
+    return response.data;
+  } catch (error) {
+    console.log('Error while calling getGroupMessages api', error.message);
+  }
+}

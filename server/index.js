@@ -11,6 +11,12 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json({extended : true}));
 app.use(bodyParser.urlencoded({extended:true}));
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'OK', message: 'Server is running' });
+});
+
 app.use("/",route);
 
       
@@ -18,10 +24,9 @@ app.use("/",route);
 
 Connection();
 
-const PORT =8000;
+const PORT = process.env.PORT || 8000;
 
-
-app.listen(PORT, ()=> console.log(`Server is running on successfully on port ${PORT}`))
+app.listen(PORT, ()=> console.log(`Server is running successfully on port ${PORT}`))
 
 
 // //import express from "express";

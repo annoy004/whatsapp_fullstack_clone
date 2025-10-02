@@ -31,7 +31,7 @@ const dialogStyle ={
 }
 const ChatDialog = () => {
 
-    const {person} = useContext(AccountContext);
+    const { person, activeGroup } = useContext(AccountContext);
     return (
         <Dialog
         open={true}
@@ -44,11 +44,7 @@ const ChatDialog = () => {
                     <Menu/>
                 </LeftComponent>
                 <RightComponent>
-                    {/* <EmptyChat/> */}
-                    
-                    {Object.keys(person).length?<ChatBox/> :<EmptyChat/>}
-                    
-
+                    {(Object.keys(person).length || activeGroup) ? <ChatBox /> : <EmptyChat />}
                 </RightComponent>
             </Component>
         </Dialog>

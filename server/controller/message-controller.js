@@ -1,55 +1,51 @@
 import Message from '../models/Message.js';
-import conversation from '../models/conversation.js';
-export const newMessage=async(request,response) => {
+import Conversation from '../models/conversation.js';
+
+export const newMessage = async (request, response) => {
     try {
+        const { isGroup, groupId, conversationId, text } = request.body;
         const newMessage = new Message(request.body);
         await newMessage.save();
-        await conversation.findByIdAndUpdate(request.body.conversationId, {message : request.body.text});
+        if (isGroup && groupId) {
+            await Conversation.findByIdAndUpdate(groupId, { message: text });
+        } else if (conversationId) {
+            await Conversation.findByIdAndUpdate(conversationId, { message: text });
+        }
         return response.status(200).json('Message has been sent successfully');
-        
     } catch (error) {
         return response.status(500).json(error.message);
     }
-}
-export const getMessages = async (request,response) => {
+};
+
+export const getMessages = async (request, response) => {
     try {
-        const messages = await Message.find({conversationId:request.params.id});
-        if(!messages) {
+        const messages = await Message.find({ conversationId: request.params.id, isGroup: { $ne: true } });
+        if (!messages) {
             return response.status(404).json('no message found here plz get away');
         }
         return response.status(200).json(messages);
     } catch (error) {
-       return response.status(500).json(error.message); 
+        return response.status(500).json(error.message);
     }
-}
+};
 
-
-// // controllers/message.js
-// import Message from '../models/Message.js';
-// import Conversation from '../models/conversation.js';
-
-// export const newMessage = async (req, res) => {
-//   try {
-//     const { conversationId, text } = req.body;
-//     if (!conversationId || !text) return res.status(400).json("Missing fields");
-
-//     const msg = new Message(req.body);
-//     await msg.save();
-
-//     await Conversation.findByIdAndUpdate(conversationId, { message: text });
-//     return res.status(200).json("Message has been sent successfully");
-//   } catch (error) {
-//     return res.status(500).json(error.message);
-//   }
-// };
-
-// export const getMessages = async (req, res) => {
-//   try {
-//     const messages = await Message.find({ conversationId: req.params.id }).sort({ createdAt: 1 });
-//     if (!messages || messages.length === 0) {
-//       return res.status(404).json("no message found here plz get away");
-//     }
-//     return res.status(200).json(messages);
-//   } catch (error) {
-//     return res.status(500).json(error.message);
-//   }
+export const getGroupMessages = async (request, response) => {
+    try {
+        const { userId } = request.query; // Get userId from query parameter
+        const groupId = request.params.id;
+        
+        // First check if the user is a member of this group
+        const group = await Conversation.findById(groupId);
+        if (!group || !group.isGroup || !group.members.includes(userId)) {
+            return response.status(403).json('Access denied: You are not a member of this group');
+        }
+        
+        const messages = await Message.find({ groupId: groupId, isGroup: true });
+        if (!messages) {
+            return response.status(404).json('no group message found');
+        }
+        return response.status(200).json(messages);
+    } catch (error) {
+        return response.status(500).json(error.message);
+    }
+};

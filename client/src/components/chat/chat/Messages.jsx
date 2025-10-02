@@ -1,83 +1,93 @@
-import { useContext ,useState,useEffect ,useRef} from 'react';
-import {Box,styled} from '@mui/material';
-import  {AccountContext} from './../../../context/accountprovider'
+import { useContext, useState, useEffect, useRef } from 'react';
+import { Box, styled } from '@mui/material';
+import { AccountContext } from './../../../context/accountprovider';
 import Footer from './Footer';
 import Message from './Message';
-import {getMessages ,newMessage } from '../../../services/api';
+import { getMessages, newMessage, getGroupMessages } from '../../../services/api';
 const Wrapper = styled(Box)`
     background-image: url(${'https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'});
     background-size: 50%;
 `;
-
-const StyledFooter = styled(Box)`
-    height: 55px;
-    background: #ededed;
-    // position: absolute;
-    width: 100%;
-    // bottom: 0
-`;
-    
 const Component = styled(Box)`
     height: 80vh;
     overflow-y: scroll;
 `;
-
 const Container = styled(Box)`
     padding: 1px 80px;
 `;
 
-
-
-const Messages = ({ person, conversation }) => {
-
+const Messages = ({ person, conversation, group }) => {
     const [messages, setMessages] = useState([]);
     const [incomingMessage, setIncomingMessage] = useState(null);
     const [value, setValue] = useState();
     const [file, setFile] = useState();
     const [image, setImage] = useState();
-
-
     const scrollRef = useRef();
+    const { account, socket, newMessageFlag, setNewMessageFlag } = useContext(AccountContext);
 
-    const { account, socket,newMessageFlag,setNewMessageFlag } = useContext(AccountContext);
+    // Join group room if group is active
+    useEffect(() => {
+        if (group && group._id) {
+            socket.current.emit('joinGroup', { groupId: group._id });
+        }
+    }, [group]);
 
     useEffect(() => {
         socket.current.on('getMessage', data => {
             setIncomingMessage({
                 ...data,
                 createdAt: Date.now()
-            })
-        })
+            });
+        });
     }, []);
-    
-    useEffect(() => {
-        const getMessageDetails = async () => {
-            let data = await getMessages(conversation?._id);
-           
-            setMessages(data);
-        }
-        getMessageDetails();
-    }, [conversation?._id, person._id, newMessageFlag]);
 
     useEffect(() => {
-        scrollRef.current?.scrollIntoView({ transition: "smooth" })
+        const getMessageDetails = async () => {
+            if (group && group._id) {
+                let data = await getGroupMessages(group._id, account.sub);
+                setMessages(data);
+            } else if (conversation?._id) {
+                let data = await getMessages(conversation._id);
+                setMessages(data);
+            }
+        };
+        getMessageDetails();
+    }, [conversation?._id, person?._id, group?._id, newMessageFlag]);
+
+    useEffect(() => {
+        scrollRef.current?.scrollIntoView({ transition: "smooth" });
     }, [messages]);
 
     useEffect(() => {
-        incomingMessage && conversation?.members?.includes(incomingMessage.senderId) && 
-            setMessages((prev) => [...prev, incomingMessage]);
-        
-    }, [incomingMessage, conversation]);
+        if (incomingMessage) {
+            if (group && group._id && incomingMessage.groupId === group._id) {
+                setMessages(prev => [...prev, incomingMessage]);
+            } else if (
+                !group &&
+                conversation?.members?.includes(incomingMessage.senderId)
+            ) {
+                setMessages(prev => [...prev, incomingMessage]);
+            }
+        }
+    }, [incomingMessage, conversation, group]);
 
     const receiverId = conversation?.members?.find(member => member !== account.sub);
-    
+
     const sendText = async (e) => {
         let code = e.keyCode || e.which;
-        if(!value) return;
-
-        if(code === 13) { 
+        if (!value) return;
+        if (code === 13) {
             let message = {};
-            if (!file) {
+            if (group && group._id) {
+                message = {
+                    senderId: account.sub,
+                    senderName: account.name,
+                    groupId: group._id,
+                    isGroup: true,
+                    type: file ? 'file' : 'text',
+                    text: file ? image : value
+                };
+            } else if (!file) {
                 message = {
                     senderId: account.sub,
                     receiverId: receiverId,
@@ -94,39 +104,36 @@ const Messages = ({ person, conversation }) => {
                     text: image
                 };
             }
-
             socket.current.emit('sendMessage', message);
-
             await newMessage(message);
-
+            // Optimistically add the message so the sender sees it immediately
+            setMessages(prev => [...prev, { ...message, createdAt: Date.now() }]);
             setValue('');
             setFile();
             setImage('');
             setNewMessageFlag(prev => !prev);
-        } 
-    }
+        }
+    };
 
     return (
         <Wrapper>
             <Component>
-                {
-                    messages && messages.map(message => (
-                        <Container ref={scrollRef}>
-                            <Message message={message} />
-                        </Container>
-                    ))
-                }
+                {messages && messages.map((message, idx) => (
+                    <Container ref={scrollRef} key={message._id || idx}>
+                        <Message message={message} isGroup={!!group} />
+                    </Container>
+                ))}
             </Component>
-            <Footer 
-                sendText={sendText} 
-                value={value} 
-                setValue={setValue} 
-                setFile={setFile} 
-                file={file} 
+            <Footer
+                sendText={sendText}
+                value={value}
+                setValue={setValue}
+                setFile={setFile}
+                file={file}
                 setImage={setImage}
             />
         </Wrapper>
-    )
-}
+    );
+};
 
 export default Messages;
