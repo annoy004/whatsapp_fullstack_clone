@@ -21,28 +21,34 @@ font-size:18px;`
 
 const Component = styled(Box)`
 background: #ededed;
-height : 85%;
+height: 85%;
+overflow-y: auto;
 
-`
-
-const drawerStyle = {
-    left:31,
-    top:12,
-    height:'95%',
-    width:'35%',
-    boxShadow:'none'
+@media (max-width: 768px) {
+    height: calc(100% - 107px);
 }
+`
 
 const InfoDrawer = ({open, setOpen}) => { 
 
   const handleClose =() => {
     setOpen(false);
   }
+  
+  const drawerStyle = {
+    left: { xs: 0, md: 31 },
+    top: { xs: 0, md: 12 },
+    height: { xs: '100%', md: '95%' },
+    width: { xs: '100%', md: '35%', lg: '35%' },
+    maxWidth: { xs: '100%', md: '35%' },
+    boxShadow: 'none',
+  }
+  
     return (
         <Drawer
         open = {open}
         onClose={handleClose}
-        PaperProps ={{sx:drawerStyle}}
+        PaperProps ={{sx: drawerStyle}}
         style={{zIndex:1800}}
         > 
         <Header>

@@ -20,7 +20,7 @@ const ChatBox = () => {
     }, [person?.sub, activeGroup]);
 
     return (
-        <Box>
+        <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
             <ChatHeader person={person} group={activeGroup} />
             <Messages
                 person={person}

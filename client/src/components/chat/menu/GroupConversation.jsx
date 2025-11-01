@@ -5,12 +5,23 @@ const Component = styled(Box)`
   height: 45px;
   padding: 13px 0;
   cursor: pointer;
+  
+  @media (max-width: 768px) {
+    padding: 10px 0;
+    height: 50px;
+  }
 `;
 const Image = styled('img')({
   width: 50,
   height: 50,
   borderRadius: '50%',
   padding: '0 14px',
+  
+  '@media (max-width: 768px)': {
+    width: 45,
+    height: 45,
+    padding: '0 12px'
+  }
 });
 const Container = styled(Box)`
   display: flex;

@@ -11,7 +11,12 @@ height:44px;
 background:#ededed;
 padding : 8px 16px;
 display: flex;
-align-items:center;`
+align-items:center;
+
+@media (max-width: 768px) {
+    padding: 8px 12px;
+    height: 50px;
+}`
  
 const Wrapper = styled(Box)`
 margin-left:auto;

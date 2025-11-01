@@ -8,17 +8,33 @@ import axios from 'axios';
 const Component = styled(Box)`
   height: 80vh;
   overflow: overlay;
+  
+  @media (max-width: 768px) {
+    height: calc(100vh - 94px);
+  }
+  
+  @media (min-width: 769px) and (max-width: 1024px) {
+    height: 75vh;
+  }
 `;
 const StyledDivider = styled(Divider)`
   margin: 0 0 0 70px;
   background-color: #e9edef;
   opacity: 0.6;
+  
+  @media (max-width: 768px) {
+    margin: 0 0 0 60px;
+  }
 `;
 const TopBar = styled(Box)`
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 8px 16px 0 16px;
+  
+  @media (max-width: 768px) {
+    padding: 8px 12px 0 12px;
+  }
 `;
 
 const GroupConversations = ({ text, onSelectGroup }) => {

@@ -7,13 +7,38 @@ import { getMessages, newMessage, getGroupMessages } from '../../../services/api
 const Wrapper = styled(Box)`
     background-image: url(${'https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png'});
     background-size: 50%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    
+    @media (max-width: 768px) {
+        background-size: 70%;
+        height: calc(100vh - 125px);
+    }
 `;
 const Component = styled(Box)`
     height: 80vh;
     overflow-y: scroll;
+    flex: 1;
+    
+    @media (max-width: 768px) {
+        height: calc(100vh - 180px);
+    }
+    
+    @media (min-width: 769px) and (max-width: 1024px) {
+        height: 75vh;
+    }
 `;
 const Container = styled(Box)`
     padding: 1px 80px;
+    
+    @media (max-width: 768px) {
+        padding: 1px 15px;
+    }
+    
+    @media (min-width: 769px) and (max-width: 1024px) {
+        padding: 1px 40px;
+    }
 `;
 
 const Messages = ({ person, conversation, group }) => {

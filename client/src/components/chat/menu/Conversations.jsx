@@ -4,7 +4,7 @@ import { getUsers } from '../../../services/api';
 import {Box,styled,Divider} from "@mui/material";
 import { AccountContext } from '../../../context/accountprovider';
 
-const Conversations = ({text})=>{
+const Conversations = ({text, onSelectConversation})=>{
 
     const [users,setUsers] = useState([]);
     const {account,socket ,setActiveUsers} = useContext(AccountContext);
@@ -26,14 +26,25 @@ const Conversations = ({text})=>{
     }, [account]);
 
     const Component= styled(Box)`
-    height : 80vh; 
+    height: 80vh; 
     overflow: overlay;
     
+    @media (max-width: 768px) {
+        height: calc(100vh - 94px);
+    }
+    
+    @media (min-width: 769px) and (max-width: 1024px) {
+        height: 75vh;
+    }
     `
     const StyledDivider = styled(Divider)`
     margin : 0 0 0 70px;
     background-color: #e9edef;
     opacity: 0.6;
+    
+    @media (max-width: 768px) {
+        margin: 0 0 0 60px;
+    }
     `
   
     return (
@@ -44,7 +55,7 @@ const Conversations = ({text})=>{
                return(  user.sub !== account.sub  &&
 
                 <>
-                <Conversation user = {user} />
+                <Conversation user = {user} onSelectConversation={onSelectConversation} />
                 <StyledDivider/>
                 </>
                 )
