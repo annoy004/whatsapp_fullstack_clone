@@ -7,6 +7,10 @@ const Component = styled(Box)`
   height: 55px;
   align-items: center;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  
+  @media (max-width: 768px) {
+    height: 50px;
+  }
 `;
 
 const Wrapper = styled(Box)`
@@ -17,6 +21,11 @@ const Wrapper = styled(Box)`
   border-radius: 25px;
   overflow: hidden;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  
+  @media (max-width: 768px) {
+    margin: 0 12px;
+    border-radius: 20px;
+  }
 `;
 
 const Icon = styled(Box)`

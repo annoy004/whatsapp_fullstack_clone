@@ -9,12 +9,23 @@ const Own = styled(Box)`
   background: linear-gradient(135deg, #d6b5ff, #b0d7ff);
   max-width: 60%;
   margin-left: auto;
+  margin-bottom: 8px;
   padding: 10px;
   width: fit-content;
   display: flex;
   border-radius: 20px;
   word-break: break-word;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+  
+  @media (max-width: 768px) {
+    max-width: 85%;
+    padding: 8px;
+    border-radius: 15px;
+  }
+  
+  @media (min-width: 769px) and (max-width: 1024px) {
+    max-width: 70%;
+  }
 `;
 const Wrapper = styled(Box)`
   background: #ffffff;
@@ -25,10 +36,25 @@ const Wrapper = styled(Box)`
   border-radius: 20px;
   word-break: break-word;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+  
+  @media (max-width: 768px) {
+    max-width: 85%;
+    padding: 8px;
+    border-radius: 15px;
+  }
+  
+  @media (min-width: 769px) and (max-width: 1024px) {
+    max-width: 70%;
+  }
 `;
 const Text = styled(Typography)`
   font-size: 14px;
   padding: 0 20px;
+  
+  @media (max-width: 768px) {
+    font-size: 13px;
+    padding: 0 10px;
+  }
 `;
 const Sender = styled(Typography)`
   font-size: 12px;
@@ -73,7 +99,16 @@ const ImageMessage = ({ message }) => {
           <Typography style={{ fontSize: 14 }}>{message.text.split('/').pop()}</Typography>
         </Box>
       ) : (
-        <img style={{ width: 300, height: '100%', object: 'cover' }} src={message.text} alt={message.text} />
+        <img style={{ 
+          width: '100%',
+          maxWidth: 300,
+          height: 'auto', 
+          objectFit: 'cover',
+          borderRadius: '8px'
+        }} 
+        src={message.text} 
+        alt={message.text} 
+        />
       )}
       <Time style={{ position: 'absolute', bottom: 0, right: 0 }}>
         <GetAppIcon

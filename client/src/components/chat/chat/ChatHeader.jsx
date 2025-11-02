@@ -10,6 +10,11 @@ const HeaderContainer = styled(Box)`
   justify-content: space-between;
   padding: 8px 16px;
   background: #ededed;
+  
+  @media (max-width: 768px) {
+    padding: 8px 12px;
+    min-height: 60px;
+  }
 `;
 
 const ChatHeader = ({ person, group }) => {

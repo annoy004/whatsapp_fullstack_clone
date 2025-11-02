@@ -5,13 +5,18 @@
  import ChatDialog from './chat/ChatDialog';
 
 
- const Component = styled(Box)`
- height: 100vh;
- background: linear-gradient(135deg, #f3e7fe, #e2ecfe);
- display: flex;
- justify-content: center;
- align-items: center;
- overflow: hidden;
+const Component = styled(Box)`
+height: 100vh;
+background: linear-gradient(135deg, #f3e7fe, #e2ecfe);
+display: flex;
+justify-content: center;
+align-items: center;
+overflow: hidden;
+
+@media (max-width: 768px) {
+    height: 100vh;
+    overflow: auto;
+}
 `;
 
 const LoginHeader = styled(AppBar)`
@@ -25,6 +30,10 @@ const LoginHeader = styled(AppBar)`
  font-family: 'Roboto', sans-serif;
  color: white;
  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+ 
+ @media (max-width: 768px) {
+    height: 150px;
+ }
 `;
 
 const Header = styled(AppBar)`
@@ -41,6 +50,11 @@ const Header = styled(AppBar)`
  &:hover {
    transform: translateY(-2px);
    background: linear-gradient(135deg, #6a63fc, #609cfb);
+ }
+ 
+ @media (max-width: 768px) {
+    height: 60px;
+    padding: 0 8px;
  }
 `;
 
